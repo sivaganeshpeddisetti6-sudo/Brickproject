@@ -2,285 +2,807 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brick Project</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #000;
-      color: #f5f5f7;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-    * {
-      box-sizing: border-box;
-    }
-    header {
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(20px);
-      color: white;
-      padding: 15px 20px;
-      text-align: center;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.3rem;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-    }
-    header p {
-      margin: 5px 0 0;
-      font-size: 0.9rem;
-      opacity: 0.7;
-      font-weight: 400;
-    }
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      position: relative;
-    }
-    .logo {
-      width: 120px;
-      height: 120px;
-      background: white;
-      border-radius: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      font-weight: bold;
-      color: #667eea;
-      margin-bottom: 30px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      animation: logoFloat 3s ease-in-out infinite;
-    }
-    @keyframes logoFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-    .hero h2, .hero p {
-      animation: floatUp 1.5s ease-out forwards;
-      opacity: 0;
-      font-weight: 600;
-    }
-    .hero h2 {
-      font-size: 3.5rem;
-      margin: 10px 0;
-      animation-delay: 0.2s;
-      letter-spacing: -2px;
-    }
-    .hero p {
-      font-size: 1.5rem;
-      margin: 0;
-      animation-delay: 0.4s;
-      font-weight: 400;
-      opacity: 0;
-    }
-    @keyframes floatUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .section {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 120px 40px;
-      max-width: 1000px;
-      margin: 0 auto;
-      background: transparent;
-      position: relative;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .section h3 {
-      font-size: 3rem;
-      font-weight: 700;
-      margin: 0 0 20px;
-      letter-spacing: -1.5px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .section p {
-      font-size: 1.3rem;
-      line-height: 1.6;
-      color: rgba(245, 245, 247, 0.8);
-      font-weight: 400;
-    }
-    .section ul {
-      list-style: none;
-      padding: 0;
-      font-size: 1.3rem;
-    }
-    .section ul li {
-      padding: 15px 0;
-      color: rgba(245, 245, 247, 0.8);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.3s ease;
-    }
-    .section ul li:hover {
-      color: #667eea;
-      transform: translateX(10px);
-    }
-    .mission-box {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 50px 40px;
-      border-radius: 25px;
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 1.8rem;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
-    }
-    .cta-button {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 18px 40px;
-      border: none;
-      border-radius: 15px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      margin-top: 30px;
-      font-weight: 600;
-      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-      transition: all 0.3s ease;
-      letter-spacing: 0.5px;
-    }
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
-    }
-    #googleFormEmbed {
-      display: none;
-      margin-top: 30px;
-    }
-    footer {
-      background: rgba(0,0,0,0.95);
-      color: rgba(245, 245, 247, 0.6);
-      padding: 40px 20px;
-      text-align: center;
-      margin-top: 0;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    @media (max-width: 768px) {
-      .hero h2 {
-        font-size: 2.5rem;
-      }
-      .hero p {
-        font-size: 1.2rem;
-      }
-      .section h3 {
-        font-size: 2rem;
-      }
-      .section p {
-        font-size: 1.1rem;
-      }
-      .mission-box {
-        font-size: 1.3rem;
-        padding: 30px 20px;
-      }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgentFlow — Secure AI Agents for Real-World Tasks</title>
+  <meta name="description" content="Action-based AI agents that securely complete tasks across portals: update records, book appointments, retrieve bills, and more. Drag-and-drop modules. Privacy-first." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+<style>
+/* =============== Base =============== */
+:root{
+  --bg: #ffffff;
+  --text: #0f172a;      /* slate-900 */
+  --muted: #475569;     /* slate-600 */
+  --border: #e2e8f0;    /* slate-200 */
+  --soft: #f8fafc;      /* slate-50 */
+  --soft2:#f1f5f9;      /* slate-100 */
+  --shadow: 0 18px 45px rgba(2,6,23,.08);
+  --radius: 18px;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color:var(--text);
+  background:var(--bg);
+  line-height:1.55;
+}
+
+a{ color:inherit; text-decoration:none; }
+.container{ width:min(1120px, 92%); margin:0 auto; }
+
+/* =============== Nav =============== */
+.nav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.75);
+  backdrop-filter: blur(10px);
+  border-bottom:1px solid rgba(226,232,240,.8);
+}
+
+.nav-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 0;
+  gap:16px;
+}
+
+.brand{ display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px; }
+.brand-dot{
+  width:12px; height:12px; border-radius:50%;
+  background: var(--text);
+  display:inline-block;
+}
+
+.nav-links{ display:flex; gap:18px; font-weight:600; color:var(--muted); }
+.nav-links a{ padding:8px 10px; border-radius:10px; }
+.nav-links a:hover{ background:var(--soft2); color:var(--text); }
+
+.nav-cta{ display:flex; gap:10px; }
+
+.nav-toggle{
+  display:none;
+  border:1px solid var(--border);
+  background:var(--bg);
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:16px;
+}
+
+.mobile-menu{
+  display:none;
+  border-top:1px solid var(--border);
+  padding:10px 0 14px;
+}
+.mobile-menu a{
+  display:block;
+  padding:12px 4%;
+  color:var(--muted);
+  font-weight:600;
+}
+.mobile-menu a:hover{ background:var(--soft2); color:var(--text); }
+.mobile-menu .mobile-cta{ display:inline-flex; margin:8px 4% 0; width:calc(92%); justify-content:center; }
+.mobile-menu.open{ display:block; }
+
+/* =============== Buttons =============== */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:12px 16px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  font-weight:700;
+  transition: transform .08s ease, background .2s ease, border-color .2s ease;
+  user-select:none;
+}
+
+.btn:active{ transform: translateY(1px); }
+.btn-primary{
+  background:var(--text);
+  color:white;
+  border-color: rgba(15,23,42,.9);
+}
+.btn-primary:hover{ background:#1f2937; }
+.btn-ghost{
+  background:rgba(255,255,255,.7);
+}
+.btn-ghost:hover{ background:var(--soft2); }
+
+/* =============== Hero =============== */
+.hero{
+  padding:72px 0 36px;
+  background:
+    radial-gradient(800px 300px at 20% 10%, rgba(15,23,42,.08), transparent 60%),
+    radial-gradient(900px 300px at 70% 0%, rgba(15,23,42,.06), transparent 65%);
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.2fr .9fr;
+  gap:36px;
+  align-items:center;
+}
+
+.pill{
+  display:inline-flex;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(248,250,252,.9);
+  color:var(--muted);
+  font-weight:700;
+  font-size:13px;
+}
+
+.hero h1{
+  margin:14px 0 12px;
+  font-size:44px;
+  line-height:1.1;
+  letter-spacing:-.02em;
+}
+
+.lead{
+  color:var(--muted);
+  font-size:18px;
+  margin:0 0 18px;
+}
+
+.hero-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:18px 0 22px;
+}
+
+.trust-row{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.trust-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:var(--muted);
+  font-weight:600;
+}
+.trust-badge{
+  font-size:12px;
+  font-weight:800;
+  padding:6px 10px;
+  border-radius:999px;
+  background:var(--soft2);
+  border:1px solid var(--border);
+  color:var(--text);
+}
+
+/* Mock card */
+.hero-card{
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.mock-top{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  background: linear-gradient(to bottom, var(--soft), white);
+}
+.dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+.red{ background:#ef4444; }
+.yellow{ background:#f59e0b; }
+.green{ background:#22c55e; }
+.mock-title{ margin-left:8px; font-weight:800; color:var(--muted); font-size:13px; }
+
+.mock-body{ padding:14px; }
+.mock-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+.tag{
+  font-size:12px;
+  font-weight:800;
+  padding:6px 10px;
+  border-radius:999px;
+  background:var(--soft2);
+  border:1px solid var(--border);
+}
+
+.chat{ display:flex; flex-direction:column; gap:10px; }
+.msg{
+  font-size:13px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  max-width: 100%;
+}
+.msg.bot{ background:var(--soft); }
+.msg.user{
+  background:white;
+  margin-left:auto;
+  border-color: rgba(15,23,42,.18);
+}
+
+.mock-actions{ display:flex; gap:8px; margin-top:10px; }
+.mini{
+  border:1px solid var(--border);
+  background:white;
+  padding:8px 10px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+.mini.primary{
+  background:var(--text);
+  color:white;
+  border-color: rgba(15,23,42,.9);
+}
+
+.mock-footer{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+  align-items:center;
+}
+.input-sim{
+  flex:1;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  color: #94a3b8;
+  font-weight:700;
+  font-size:13px;
+  background: white;
+}
+.send-sim{
+  width:40px; height:40px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:900;
+  color:var(--muted);
+  background:var(--soft);
+}
+
+/* =============== Sections =============== */
+.section{ padding:64px 0; }
+.section.alt{ background:var(--soft); border-top:1px solid rgba(226,232,240,.7); border-bottom:1px solid rgba(226,232,240,.7); }
+
+.section-head{ margin-bottom:22px; }
+.section-head h2{
+  font-size:30px;
+  margin:0 0 8px;
+  letter-spacing:-.01em;
+}
+.section-head p{ margin:0; color:var(--muted); font-size:16px; max-width: 70ch; }
+
+.grid-3{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:18px;
+}
+.grid-2{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:18px;
+}
+
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  padding:18px;
+  box-shadow: 0 10px 25px rgba(2,6,23,.04);
+}
+.card h3{ margin:0 0 8px; font-size:18px; }
+.card p{ margin:0 0 12px; color:var(--muted); }
+
+.checklist, .bullet{
+  margin:0; padding-left:18px;
+  color:var(--muted);
+  font-weight:600;
+}
+.checklist li{ margin:8px 0; }
+.bullet li{ margin:8px 0; }
+
+.steps{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:14px;
+}
+.step{
+  background:white;
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  padding:18px;
+}
+.step-num{
+  width:34px; height:34px;
+  border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--soft2);
+  border:1px solid var(--border);
+  font-weight:900;
+  margin-bottom:10px;
+}
+.step h3{ margin:0 0 6px; }
+.step p{ margin:0; color:var(--muted); font-weight:600; }
+
+.note{
+  margin-top:16px;
+  padding:14px 16px;
+  border-radius:16px;
+  background: white;
+  border:1px dashed rgba(15,23,42,.25);
+  color:var(--muted);
+}
+
+/* =============== FAQ =============== */
+.faq{
+  display:grid;
+  gap:12px;
+}
+details{
+  background:white;
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  padding:14px 16px;
+}
+summary{
+  cursor:pointer;
+  font-weight:800;
+}
+details p{
+  color:var(--muted);
+  margin:10px 0 0;
+  font-weight:600;
+}
+
+/* =============== Contact =============== */
+.contact-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:22px;
+  align-items:start;
+}
+.contact-points{
+  display:grid;
+  gap:10px;
+  color:var(--muted);
+  font-weight:600;
+  margin-top:14px;
+}
+
+.form{
+  background:white;
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  padding:18px;
+  box-shadow: 0 10px 25px rgba(2,6,23,.04);
+}
+label{
+  display:block;
+  font-weight:800;
+  margin-bottom:12px;
+  font-size:13px;
+}
+input, textarea{
+  width:100%;
+  margin-top:6px;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  font:inherit;
+  outline:none;
+}
+input:focus, textarea:focus{
+  border-color: rgba(15,23,42,.35);
+  box-shadow: 0 0 0 4px rgba(15,23,42,.06);
+}
+.fineprint{
+  color:#64748b;
+  font-size:12px;
+  margin:10px 0 0;
+}
+
+/* =============== Footer =============== */
+.footer{
+  padding:26px 0;
+  border-top:1px solid rgba(226,232,240,.8);
+  background:white;
+}
+.footer-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.brand-row{ display:flex; align-items:center; gap:10px; }
+.footer-links{ display:flex; gap:16px; color:var(--muted); font-weight:700; }
+.footer-links a:hover{ color:var(--text); }
+.small{ color:#64748b; font-weight:600; font-size:12px; }
+
+/* =============== Responsive =============== */
+@media (max-width: 980px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .hero h1{ font-size:38px; }
+  .steps{ grid-template-columns: 1fr 1fr; }
+  .grid-3{ grid-template-columns: 1fr; }
+  .grid-2{ grid-template-columns: 1fr; }
+  .contact-grid{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px){
+  .nav-links, .nav-cta{ display:none; }
+  .nav-toggle{ display:inline-flex; }
+  .hero{ padding-top:54px; }
+  .hero h1{ font-size:34px; }
+}
+
+</style>
 <body>
-  <header>
-    <h1>Brick Project</h1>
-       <p>A place where people can claim their insurance without middlemen</p>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-dot"></span>
+        <span>Brick</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#product">Product</a>
+        <a href="#how">How it works</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#security">Security</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="#contact">Join Waitlist</a>
+        <a class="btn btn-primary" href="#contact">Request Demo</a>
+      </div>
+
+      <button class="nav-toggle" aria-label="Open menu" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#product" onclick="toggleMenu()">Product</a>
+      <a href="#how" onclick="toggleMenu()">How it works</a>
+      <a href="#solutions" onclick="toggleMenu()">Solutions</a>
+      <a href="#security" onclick="toggleMenu()">Security</a>
+      <a href="#faq" onclick="toggleMenu()">FAQ</a>
+      <a class="btn btn-primary mobile-cta" href="#contact" onclick="toggleMenu()">Request Demo</a>
+    </div>
   </header>
 
-  <section class="hero">
-    <div class="logo">🧱</div>
-    <h2>Welcome to Brick Project</h2>
-    <p>Connecting people directly. No fees. No intermediaries.</p>
-  </section>
+  <!-- HERO -->
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="pill">Action-based AI Agents • Drag-and-Drop Modules • Privacy-First</p>
+          <h1>One AI to handle tasks across portals that not just answer questions.</h1>
+          <p class="lead">
+            Build secure AI agents that can update records, book appointments, retrieve bills,
+            and complete workflows across connected systems with user approval and full audit logs.
+          </p>
 
-  <section class="section">
-    <h3>Our Startup Mission</h3>
-    <div class="mission-box">
-      Claim Insurance without borders-just a click away
-    </div>
-    <p>Traditional insurance claims can take a lot of time and effort. Sending a fax or even a single-day courier mail costs money, and sometimes we have to travel just to drop off documents. Then we wait for days to know if the claim has reached the office, and even longer to see it processed. Every step printing forms, finding the right address, waiting for confirmation adds stress and delays. It’s a process that wastes both time and money, making something that should be simple feel complicated and slow.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Request a Demo</a>
+            <a class="btn btn-ghost" href="#product">Explore Product</a>
+          </div>
 
-<p>At our company, we’ve completely changed that. You can submit your claim online in just a few clicks, with no paperwork, no travel, and no waiting for mail to arrive. It doesn’t matter where you are at home or traveling abroad or what type of claim it is. Everything is fast, simple, and hassle free. We handle the process from start to finish, so you don’t have to worry about delays, costs, or extra work. Claiming insurance has never been this easy.</p>
-  </section>
+          <div class="trust-row">
+            <div class="trust-item">
+              <div class="trust-badge">No Training</div>
+              <span>No training on sensitive customer data</span>
+            </div>
+            <div class="trust-item">
+              <div class="trust-badge">Scoped Access</div>
+              <span>Least-privilege permissions per agent</span>
+            </div>
+            <div class="trust-item">
+              <div class="trust-badge">Audit Logs</div>
+              <span>Every action is recorded and reviewable</span>
+            </div>
+          </div>
+        </div>
 
-<section class="section">
-  <h3>What We Offer</h3>
-  <ul>
-    <li>Claim your insurance easily, anytime, anywhere</li>
-    <li>No paperwork, no travel, no extra costs</li>
-    <li>Fast, secure, and hassle-free online process</li>
-  </ul>
-</section>
-<section class="section">
-  <h3>Join the Community</h3>
-  <p>Be part of a platform where submitting and managing your insurance claims is fast, easy, and hassle-free anytime, anywhere.</p>
-</section>
+        <!-- Mock UI -->
+        <div class="hero-card">
+          <div class="mock-top">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="mock-title">AgentFlow Console</span>
+          </div>
 
-  <section class="section" id="invest">
-    <h3>We Are Looking for Developers</h3>
-    <p>It doesn't matter how much if you're interested in developing things, submit your details and we will contact you.</p>
-    <button class="cta-button" onclick="document.getElementById('googleFormEmbed').style.display='block'">
-      Join as a Developer
-    </button>
-    <div id="googleFormEmbed">
-      <p style="margin-bottom:15px; font-weight:bold;">Investor Submission Form</p>
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSepewzwES2at1pPxRmjocYYtz5wSfhTdFCBb4sPHGUHFDq2hg/viewform?usp=dialog" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    </div>
-  </section>
+          <div class="mock-body">
+            <div class="mock-row">
+              <div class="tag">Connected</div>
+              <div class="tag">University Portal</div>
+              <div class="tag">Clinic Scheduler</div>
+            </div>
 
-  <footer>
-    <p>© 2025 Brick Project. All rights reserved.</p>
-  </footer>
+            <div class="chat">
+              <div class="msg bot">
+                Hi! What would you like to do today?
+              </div>
+              <div class="msg user">
+                Update my email address on all my school systems.
+              </div>
+              <div class="msg bot">
+                I can update it in: Student Info, Financial Aid, and Housing.
+		Please enter the email you want to change. 
+                <b>Confirm</b> to proceed.
+		<div class="msg user">
+                abc@gmail.com
+              </div>
+                <div class="mock-actions">
+                  <button class="mini">Review changes</button>
+                  <button class="mini primary">Confirm</button>
+                </div>
+              </div>
+              <div class="msg bot">
+                Done. Changes applied. View audit log?
+              </div>
+            </div>
+
+            <div class="mock-footer">
+              <div class="input-sim">Ask an agent…</div>
+              <div class="send-sim">↵</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT -->
+    <section id="product" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Product</h2>
+          <p>Traditional chatbots answer questions. AgentFlow completes secure workflows across systems.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Drag-and-Drop Agent Builder</h3>
+            <p>Create workflows with modules — no coding required. Mix triggers, steps, and approvals.</p>
+            <ul class="checklist">
+              <li>Templates for common tasks</li>
+              <li>Role-based agent behavior</li>
+              <li>Reusable modules</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Module Marketplace</h3>
+            <p>Publish modules or use community modules safely with permission scopes and reviews.</p>
+            <ul class="checklist">
+              <li>Versioning & updates</li>
+              <li>Sandboxed execution</li>
+              <li>Ratings & reporting</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Action with Approval</h3>
+            <p>Agents can draft actions (forms, updates) and request approval before submitting.</p>
+            <ul class="checklist">
+              <li>“Review before submit”</li>
+              <li>Change previews</li>
+              <li>Rollback & audit</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>How it works</h2>
+          <p>Connect systems, define permissions, and let agents do the repetitive work.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h3>Connect</h3>
+            <p>Link portals and services using secure connectors and scoped access.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h3>Build</h3>
+            <p>Create an agent using drag-and-drop modules or start from templates.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h3>Approve</h3>
+            <p>Agents propose actions. Users confirm before anything changes.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <h3>Audit</h3>
+            <p>Everything is logged: who requested, what changed, when, and where.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTIONS -->
+    <section id="solutions" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Solutions</h2>
+          <p>Start in one vertical, then expand. Here are common use cases.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Education</h3>
+            <p>Reduce administrative friction for students and staff.</p>
+            <ul class="bullet">
+              <li>Update address across systems</li>
+              <li>Track holds, deadlines, requests</li>
+              <li>Automate FAQ + actions</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Healthcare</h3>
+            <p>Patient self-service without the portal maze.</p>
+            <ul class="bullet">
+              <li>Book or reschedule appointments</li>
+              <li>View bills and payment status</li>
+              <li>Request records & documents</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Organizations</h3>
+            <p>AI agents for internal workflows across tools.</p>
+            <ul class="bullet">
+              <li>HR onboarding & updates</li>
+              <li>IT tickets + access requests</li>
+              <li>Form submissions & reporting</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECURITY -->
+    <section id="security" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Security & Privacy</h2>
+          <p>Built for sensitive workflows from day one.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Privacy-first architecture</h3>
+            <ul class="checklist">
+              <li>No training on sensitive user data</li>
+              <li>No cross-user memory</li>
+              <li>Per-agent isolation (each bot acts independently)</li>
+              <li>Retention controls (forget after task / time-based)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Security controls</h3>
+            <ul class="checklist">
+              <li>Encrypted secrets vault for credentials/tokens</li>
+              <li>Least-privilege access scopes</li>
+              <li>Approval gates before critical actions</li>
+              <li>Audit logs for every request and change</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="note">
+          <b>Compliance note:</b> If you operate in regulated industries (e.g., healthcare/education),
+          you’ll align policies and controls to applicable laws and requirements (HIPAA/FERPA, etc.).
+          Only claim certifications after you actually complete them.
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>FAQ</h2>
+          <p>Quick answers to common questions.</p>
+        </div>
+
+        <div class="faq">
+          <details>
+            <summary>Is this just a chatbot?</summary>
+            <p>Yes.It can answer your questions, and also AgentFlow is designed to securely <b>complete tasks</b> across systems, with approvals and audit logs.</p>
+          </details>
+          <details>
+            <summary>How do you handle passwords and sensitive data?</summary>
+            <p>Use encrypted storage for secrets and prefer token-based access. Agents only get the minimum access needed to complete a task.</p>
+          </details>
+          <details>
+            <summary>Can anyone publish modules?</summary>
+            <p>Yes, but community modules should run in a sandbox with permission scopes, reviews, and versioning so users stay safe.</p>
+          </details>
+          <details>
+            <summary>Do you train AI models on user data?</summary>
+            <p>No training on sensitive user data. You can also configure retention controls to delete task data after completion.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section alt">
+      <div class="container contact-grid">
+        <div>
+          <h2>Request a demo</h2>
+          <p class="lead">
+            Tell us your use case (education, healthcare, or internal ops). We’ll follow up with a demo and pilot options.
+          </p>
+
+          <div class="contact-points">
+            <div><b>Fast pilots:</b> start with 1–2 workflows</div>
+            <div><b>Security:</b> permissions + audit trail</div>
+            <div><b>Scale:</b> reuse modules across teams</div>
+          </div>
+        </div>
+
+        <div class="card">
+  <h3>Join the waitlist</h3>
+  <p class="lead">Fill out our Google Form to request a demo or join the waitlist.</p>
+  <a class="btn btn-primary" target="_blank" rel="noreferrer"
+     href="https://forms.gle/DWUL4BnnAkfBBGGN9">
+    Join Waitlist
+  </a>
+</div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="brand-row">
+          <span class="brand-dot"></span>
+          <b>Brick</b>
+        </div>
+        <div class="footer-links">
+          <a href="#product">Product</a>
+          <a href="#security">Security</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="small">© <span id="year"></span> Brick. All rights reserved.</div>
+      </div>
+    </footer>
+  </main>
 
   <script>
-    // Smooth scroll-triggered animations
-    const sections = document.querySelectorAll('.section');
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, {
-      threshold: 0.15,
-      rootMargin: '0px'
-    });
+    function toggleMenu() {
+      const el = document.getElementById("mobileMenu");
+      el.classList.toggle("open");
+    }
 
-    sections.forEach(section => {
-      observer.observe(section);
-    });
+    function fakeSubmit(e) {
+      e.preventDefault();
+      const note = document.getElementById("formNote");
+      note.textContent = "Thanks! Message captured locally (demo). Connect to a real form endpoint when ready.";
+      return false;
+    }
 
-    // Parallax effect for hero
-    window.addEventListener('scroll', () => {
-      const hero = document.querySelector('.hero');
-      const scrolled = window.pageYOffset;
-      hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-      hero.style.opacity = 1 - (scrolled / 600);
-    });
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
